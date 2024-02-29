@@ -12,7 +12,8 @@ const theme = createTheme({
   palette: {
     tripfare: {
       main: '#62558B'
-    }
+    },
+    soot: '#160D08'
   },
   typography: {
     fontFamily: roboto.style.fontFamily
