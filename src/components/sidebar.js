@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import Followers from './followers';
+import Followers from './Followers';
 import Tags from './tags';
 
 export default function Sidebar() {

@@ -5,7 +5,8 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemButton,
-  ListItemText
+  ListItemText,
+  Typography
 } from '@mui/material';
 
 const followers = [
@@ -33,7 +34,10 @@ const followers = [
 
 export default function Followers() {
   return (
-    <Box sx={{ boxShadow: 1, borderRadius: 2, mt: 3 }}>
+    <Box sx={{ boxShadow: 1, borderRadius: 2, mt: 3, pt: 2 }}>
+      <Typography textAlign='center' component='h5' fontWeight={600}>
+        {followers.length} followers
+      </Typography>
       <List>
         {followers.map(follower => (
           <ListItem key={follower.id}>
