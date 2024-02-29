@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import Followers from './Followers';
+import Following from './following';
 import Tags from './tags';
 
 export default function Sidebar() {
@@ -7,6 +8,7 @@ export default function Sidebar() {
     <Box component='aside'>
       <Tags />
       <Followers />
+      <Following />
     </Box>
   );
 }
