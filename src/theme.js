@@ -9,6 +9,11 @@ const roboto = Roboto({
 });
 
 const theme = createTheme({
+  palette: {
+    tripfare: {
+      main: '#62558B'
+    }
+  },
   typography: {
     fontFamily: roboto.style.fontFamily
   }
