@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
           <ThemeProvider theme={theme}>
             <CssBaseline />
             <Navbar />
-            <Container sx={{ mt: 5 }}>
+            <Container sx={{ my: 5 }}>
               <Grid container columnSpacing={12}>
                 <Grid item md={4}>
                   <Sidebar />
