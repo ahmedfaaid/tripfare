@@ -10,7 +10,15 @@ import {
 
 export default function ContactAndHelp() {
   return (
-    <Box sx={{ boxShadow: 1, borderRadius: 2, mt: 3, pt: 2 }}>
+    <Box
+      sx={{
+        boxShadow: 1,
+        borderRadius: 2,
+        mt: 3,
+        pt: 2,
+        backgroundColor: 'cardWhite'
+      }}
+    >
       <List>
         <ListItem disablePadding>
           <ListItemButton href='#'>

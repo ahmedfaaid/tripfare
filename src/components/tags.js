@@ -12,7 +12,7 @@ const tags = [
 
 export default function Tags() {
   return (
-    <Box sx={{ boxShadow: 1, borderRadius: 2 }}>
+    <Box sx={{ boxShadow: 1, borderRadius: 2, backgroundColor: 'cardWhite' }}>
       <List>
         {tags.map(tag => (
           <ListItem key={tag}>

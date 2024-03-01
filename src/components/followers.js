@@ -34,7 +34,15 @@ const followers = [
 
 export default function Followers() {
   return (
-    <Box sx={{ boxShadow: 1, borderRadius: 2, mt: 3, pt: 2 }}>
+    <Box
+      sx={{
+        boxShadow: 1,
+        borderRadius: 2,
+        mt: 3,
+        pt: 2,
+        backgroundColor: 'cardWhite'
+      }}
+    >
       <Typography
         textAlign='center'
         component='h5'
