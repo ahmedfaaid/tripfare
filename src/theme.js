@@ -14,7 +14,8 @@ const theme = createTheme({
       main: '#62558B'
     },
     soot: '#160D08',
-    cardWhite: '#FFFDFC'
+    cardWhite: '#FFFDFC',
+    olive: '#448F74'
   },
   typography: {
     fontFamily: roboto.style.fontFamily
