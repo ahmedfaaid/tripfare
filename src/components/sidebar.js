@@ -2,6 +2,7 @@ import { Box } from '@mui/material';
 import Followers from './Followers';
 import ContactAndHelp from './contactAndHelp';
 import Following from './following';
+import FooterLinks from './footerlinks';
 import Tags from './tags';
 
 export default function Sidebar() {
@@ -11,6 +12,7 @@ export default function Sidebar() {
       <Followers />
       <Following />
       <ContactAndHelp />
+      <FooterLinks />
     </Box>
   );
 }
