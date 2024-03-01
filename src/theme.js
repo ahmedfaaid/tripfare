@@ -13,7 +13,8 @@ const theme = createTheme({
     tripfare: {
       main: '#62558B'
     },
-    soot: '#160D08'
+    soot: '#160D08',
+    cardWhite: '#FFFDFC'
   },
   typography: {
     fontFamily: roboto.style.fontFamily
