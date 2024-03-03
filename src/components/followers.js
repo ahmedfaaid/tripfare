@@ -52,7 +52,7 @@ export default function Followers() {
         {followers.length} followers
       </Typography>
       <List>
-        {followers.map(follower => (
+        {followers.map((follower) => (
           <ListItem key={follower.id}>
             <ListItemButton href='#'>
               <ListItemAvatar>

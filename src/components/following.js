@@ -52,7 +52,7 @@ export default function Following() {
         {following.length} following
       </Typography>
       <List>
-        {following.map(follower => (
+        {following.map((follower) => (
           <ListItem key={follower.id}>
             <ListItemButton href='#'>
               <ListItemAvatar>

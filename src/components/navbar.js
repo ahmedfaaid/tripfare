@@ -23,7 +23,6 @@ import Tooltip from '@mui/material/Tooltip';
 import { grey } from '@mui/material/colors';
 import { useState } from 'react';
 
-const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Search = styled('div')(({ theme }) => ({
@@ -69,18 +68,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
-  const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const handleOpenNavMenu = event => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = event => {
+  const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
@@ -122,7 +113,6 @@ export default function Navbar() {
               aria-label='account of current user'
               aria-controls='menu-appbar'
               aria-haspopup='true'
-              onClick={handleOpenNavMenu}
               color='inherit'
             >
               <MenuIcon sx={{ color: grey[50] }} />
@@ -209,7 +199,7 @@ export default function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map(setting => (
+              {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign='center'>{setting}</Typography>
                 </MenuItem>

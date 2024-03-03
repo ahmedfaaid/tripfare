@@ -20,7 +20,7 @@ export default function FooterLinks() {
           justifyContent: 'space-around'
         }}
       >
-        {links.map(link => (
+        {links.map((link) => (
           <Link
             key={link}
             sx={{

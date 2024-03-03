@@ -14,7 +14,7 @@ export default function Tags() {
   return (
     <Box sx={{ boxShadow: 1, borderRadius: 2, backgroundColor: 'cardWhite' }}>
       <List>
-        {tags.map(tag => (
+        {tags.map((tag) => (
           <ListItem key={tag}>
             <Link href='#' underline='hover' color='soot'>
               {tag}

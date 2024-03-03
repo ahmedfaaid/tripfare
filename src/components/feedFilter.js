@@ -9,15 +9,15 @@ export default function FeedFilter() {
   const costOpen = Boolean(costEl);
   const stayLengthOpen = Boolean(stayLengthEl);
 
-  const openLocation = event => {
+  const openLocation = (event) => {
     setLocationEl(event.currentTarget);
   };
 
-  const openCost = event => {
+  const openCost = (event) => {
     setCostEl(event.currentTarget);
   };
 
-  const openStayLength = event => {
+  const openStayLength = (event) => {
     setStayLengthEl(event.currentTarget);
   };
 
