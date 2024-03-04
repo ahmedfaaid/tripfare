@@ -44,8 +44,10 @@ export default function PostCard({ post, index }) {
               <Link
                 href='/profile'
                 sx={{
-                  fontWeight: 500
+                  fontWeight: 500,
+                  color: 'soot'
                 }}
+                underline='hover'
               >
                 {post.postedBy.username}
               </Link>{' '}
@@ -54,7 +56,11 @@ export default function PostCard({ post, index }) {
                 {post.lengthOfStay}
               </Typography>{' '}
               in{' '}
-              <Link href={`/tags/${post.location}`} sx={{ fontWeight: 500 }}>
+              <Link
+                href={`/tags/${post.location}`}
+                sx={{ fontWeight: 500, color: 'soot' }}
+                underline='hover'
+              >
                 {post.location}
               </Link>
             </Typography>
