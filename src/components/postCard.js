@@ -89,7 +89,7 @@ export default function PostCard({ post, index }) {
       </Box>
       <Box sx={{ marginLeft: 9, display: 'flex', marginBottom: 1 }}>
         <Typography sx={{ fontSize: 12, color: grey[600] }}>
-          {post.text.substring(0, 100)}
+          {post.text.substring(0, 100)}...
         </Typography>
       </Box>
       <CardActionArea href={`/posts/${slugify(post.title)}`}>
