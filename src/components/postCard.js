@@ -1,3 +1,4 @@
+import { slugify } from '@/utils/fns';
 import {
   BookmarkBorderOutlined,
   MessageOutlined,
@@ -10,10 +11,12 @@ import {
   Box,
   Button,
   Card,
+  CardActionArea,
   CardActions,
   CardHeader,
   CardMedia,
   IconButton,
+  Link,
   Typography
 } from '@mui/material';
 import { grey } from '@mui/material/colors';
@@ -39,29 +42,30 @@ export default function PostCard({ post, index }) {
         title={
           <Box>
             <Typography component='p' sx={{ fontSize: 14, color: 'soot' }}>
-              <Typography
-                component='span'
+              <Link
+                href='/profile'
                 sx={{
                   fontWeight: 500
                 }}
               >
                 {post.postedBy.username}
-              </Typography>{' '}
+              </Link>{' '}
               spent{' '}
               <Typography component='span' sx={{ fontWeight: 500 }}>
                 {post.lengthOfStay}
               </Typography>{' '}
               in{' '}
-              <Typography component='span' sx={{ fontWeight: 500 }}>
+              <Link href={`/tags/${post.location}`} sx={{ fontWeight: 500 }}>
                 {post.location}
-              </Typography>
+              </Link>
             </Typography>
           </Box>
         }
         subheader={
           <Box>
-            <Typography
-              component='p'
+            <Link
+              underline='hover'
+              href={`/posts/${slugify(post.title)}`}
               sx={{
                 fontWeight: 500,
                 marginTop: 1,
@@ -70,7 +74,7 @@ export default function PostCard({ post, index }) {
               }}
             >
               {post.title}
-            </Typography>
+            </Link>
           </Box>
         }
       />
@@ -88,12 +92,15 @@ export default function PostCard({ post, index }) {
           {post.text.substring(0, 100)}
         </Typography>
       </Box>
-      <CardMedia component='img' src={post.image} />
+      <CardActionArea href={`/posts/${slugify(post.title)}`}>
+        <CardMedia component='img' src={post.image} />
+      </CardActionArea>
       <CardActions sx={{ color: grey[600] }}>
         <Button
           startIcon={<MessageOutlined />}
           color='inherit'
           sx={{ fontSize: 12 }}
+          href={`/posts/${slugify(post.title)}/#comments`}
         >
           12 Comments
         </Button>
