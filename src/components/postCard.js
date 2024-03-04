@@ -24,7 +24,6 @@ import { grey } from '@mui/material/colors';
 export default function PostCard({ post, index }) {
   return (
     <Card
-      key={post.id}
       sx={{
         boxShadow: 1,
         ...(index !== 0 && { marginTop: 5 })
