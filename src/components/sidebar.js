@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
-import Followers from './Followers';
 import ContactAndHelp from './contactAndHelp';
+import Followers from './followers';
 import Following from './following';
 import FooterLinks from './footerlinks';
 import Tags from './tags';
