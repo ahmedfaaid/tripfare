@@ -23,7 +23,9 @@ export default function RootLayout({ children }) {
                   <Sidebar />
                 </Grid>
                 <Grid item md={8}>
-                  <Box component='main'>{children}</Box>
+                  <Box component='main' sx={{ minHeight: '100vh' }}>
+                    {children}
+                  </Box>
                 </Grid>
               </Grid>
             </Container>
