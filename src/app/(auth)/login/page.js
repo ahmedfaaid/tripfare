@@ -1,6 +1,7 @@
 'use client';
-import { loginAction } from '@/app/actions';
 import Copyright from '@/components/copyright';
+import { AuthContext } from '@/context/auth';
+import { loginSchema } from '@/lib/forms';
 import {
   Box,
   Button,
@@ -11,13 +12,42 @@ import {
   TextField,
   Typography
 } from '@mui/material';
+import { red } from '@mui/material/colors';
+import { useFormik } from 'formik';
+import { useRouter } from 'next/navigation';
+import { useContext } from 'react';
 
 export default function Login() {
+  const {
+    authContext: { login }
+  } = useContext(AuthContext);
+  const router = useRouter();
+
+  const { handleSubmit, handleChange, values, touched, errors, status } =
+    useFormik({
+      initialValues: {
+        email: '',
+        password: ''
+      },
+      initialStatus: null,
+      validationSchema: loginSchema,
+      onSubmit: async (values, { setStatus }) => {
+        const res = await login(values);
+
+        if (!res.ok) {
+          setStatus({ response: res.response.message });
+        } else {
+          setStatus(null);
+          router.push('/');
+        }
+      }
+    });
+
   return (
     <Box
       component='form'
-      action={loginAction}
       sx={{ height: '100%', width: '100%' }}
+      onSubmit={handleSubmit}
     >
       <Typography
         component='h2'
@@ -26,6 +56,18 @@ export default function Login() {
       >
         Login
       </Typography>
+      {status && (
+        <Typography
+          sx={{
+            textAlign: 'center',
+            color: red[300],
+            marginTop: 2,
+            marginBottom: 2
+          }}
+        >
+          {status.response}
+        </Typography>
+      )}
       <Box>
         <Box>
           <TextField
@@ -37,7 +79,19 @@ export default function Login() {
             color='tripfare'
             required
             autoComplete='email'
+            onChange={handleChange}
+            value={values.email}
           />
+          {touched.email && errors.email && (
+            <Typography
+              sx={{
+                color: red[300],
+                marginTop: 1
+              }}
+            >
+              {errors.email}
+            </Typography>
+          )}
         </Box>
         <Box>
           <TextField
@@ -52,7 +106,19 @@ export default function Login() {
             fullWidth
             color='tripfare'
             required
+            onChange={handleChange}
+            value={values.password}
           />
+          {touched.password && errors.password && (
+            <Typography
+              sx={{
+                color: red[300],
+                marginTop: 1
+              }}
+            >
+              {errors.password}
+            </Typography>
+          )}
         </Box>
         <Box sx={{ marginTop: 3 }}>
           <FormControlLabel
