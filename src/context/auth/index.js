@@ -18,7 +18,6 @@ export default function AuthProvider({ children }) {
       setLoading(true);
       if (!cookies.tripfare_qid) {
         setUser(null);
-        router.push('/login');
         return;
       }
 
@@ -39,7 +38,6 @@ export default function AuthProvider({ children }) {
       ) {
         setUser(null);
         setLoading(false);
-        router.push('/login');
         return;
       }
 
