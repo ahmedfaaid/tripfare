@@ -1,4 +1,5 @@
 'use client';
+import { AuthContext } from '@/context/auth';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import HouseIcon from '@mui/icons-material/House';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -21,9 +22,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 import { grey } from '@mui/material/colors';
-import { useState } from 'react';
-
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import { useRouter } from 'next/navigation';
+import { useContext, useState } from 'react';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -69,9 +69,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Navbar() {
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const {
+    user,
+    authContext: { logout }
+  } = useContext(AuthContext);
+  const router = useRouter();
 
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+    if (!user) {
+      router.push('/login');
+    } else {
+      setAnchorElUser(event.currentTarget);
+    }
   };
 
   const handleCloseUserMenu = () => {
@@ -199,11 +208,12 @@ export default function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign='center'>{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={() => router.push('/profile')}>
+                <Typography textAlign='center'>Profile</Typography>
+              </MenuItem>
+              <MenuItem onClick={logout}>
+                <Typography textAlign='center'>Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
