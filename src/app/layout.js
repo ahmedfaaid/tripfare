@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <CookiesProvider>
+            <CookiesProvider defaultSetOptions={{ path: '/' }}>
               <AuthProvider>
                 <Navbar />
                 <Container sx={{ my: 5 }}>
