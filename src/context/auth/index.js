@@ -1,115 +1,77 @@
 'use client';
-import { decrypt, encrypt } from '@/lib/functions';
-import userData from '@/user_data.json';
-import { useRouter } from 'next/navigation';
+import { apiUrl } from '@/utils/constants';
+import { useParams, useRouter } from 'next/navigation';
 import { createContext, useEffect, useMemo, useState } from 'react';
-import { useCookies } from 'react-cookie';
 
 export const AuthContext = createContext(null);
 
 export default function AuthProvider({ children }) {
-  const [cookies, setCookie, removeCookie] = useCookies(['tripfare_qid']);
   const router = useRouter();
+  const params = useParams();
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     const me = async () => {
       setLoading(true);
-      if (!cookies.tripfare_qid) {
+
+      const req = await fetch(`${apiUrl}/auth/me`, {
+        method: 'POST'
+      });
+      const res = await req.json();
+
+      if (res.statusCode === 401) {
         setUser(null);
         return;
       }
 
-      const session = await decrypt(cookies.tripfare_qid);
-
-      const {
-        user: { id, email, username },
-        expires
-      } = session;
-      const searchedUser = await userData.find((u) => u.id === id);
-
-      if (
-        !searchedUser ||
-        searchedUser.id !== id ||
-        searchedUser.email !== email ||
-        searchedUser.username !== username ||
-        new Date().getTime() > new Date(expires).getTime()
-      ) {
-        setUser(null);
-        setLoading(false);
-        return;
-      }
-
-      setUser(user);
+      setUser(res);
       setLoading(false);
     };
 
     me();
-  }, [user, cookies, router]);
+  }, []);
 
   const authContext = useMemo(
     () => ({
       login: async (data) => {
         setLoading(true);
 
-        const { email, password } = data;
-
-        const user = await userData.find((user) => user.email === email);
-
-        if (!user) {
-          setLoading(false);
-          setUser(null);
-          return {
-            ok: false,
-            response: {
-              status: 401,
-              message: 'Invalid Credentials'
-            }
-          };
-        }
-        if (password !== user.password) {
-          setLoading(false);
-          setUser(null);
-          return {
-            ok: false,
-            response: {
-              status: 401,
-              message: 'Invalid Credentials'
-            }
-          };
-        }
-
-        const dataStore = {
-          id: user.id,
-          email: user.email,
-          username: user.username
-        };
-        const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
-        const session = await encrypt({ user: dataStore, expires });
-        await setCookie('tripfare_qid', session, {
-          httpOnly: true,
-          expires
+        const req = await fetch(`${apiUrl}/auth/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
         });
-        setUser(user);
-        setLoading(false);
+        const res = await req.json();
 
+        if (res.statusCode === 401) {
+          setUser(null);
+          setLoading(false);
+          return {
+            ok: false,
+            response:
+              'Invalid credentials. Please check your email and/or password'
+          };
+        }
+
+        setUser(res);
+        router.push(params.redirect ? `${params.redirect}` : '/');
+        setLoading(false);
         return {
           ok: true,
-          response: {
-            status: 200,
-            message: 'Login Successful'
-          }
+          response: res
         };
       },
       logout: async () => {
-        await removeCookie('tripfare_qid', {
-          expires: new Date(0)
-        });
+        setLoading(true);
+        await fetch(`${apiUrl}/auth/logout`);
         setUser(null);
+        setLoading(false);
       }
     }),
-    [setCookie, removeCookie]
+    [router, params]
   );
 
   return (
