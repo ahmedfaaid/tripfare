@@ -14,14 +14,12 @@ import {
 } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { useFormik } from 'formik';
-import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
 
 export default function Login() {
   const {
     authContext: { login }
   } = useContext(AuthContext);
-  const router = useRouter();
 
   const { handleSubmit, handleChange, values, touched, errors, status } =
     useFormik({
@@ -35,10 +33,9 @@ export default function Login() {
         const res = await login(values);
 
         if (!res.ok) {
-          setStatus({ response: res.response.message });
+          setStatus({ response: res.response });
         } else {
           setStatus(null);
-          router.push('/');
         }
       }
     });
