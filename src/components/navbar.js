@@ -1,5 +1,6 @@
 'use client';
 import { AuthContext } from '@/context/auth';
+import { apiUrl } from '@/utils/constants';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import HouseIcon from '@mui/icons-material/House';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -74,6 +75,7 @@ export default function Navbar() {
     authContext: { logout }
   } = useContext(AuthContext);
   const router = useRouter();
+  console.log({ user });
 
   const handleOpenUserMenu = (event) => {
     if (!user) {
@@ -181,15 +183,23 @@ export default function Navbar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title='Open settings'>
+            <Tooltip title={user ? 'Open settings' : 'Login'}>
               <IconButton
                 onClick={handleOpenUserMenu}
                 aria-controls='menu-appbar'
                 aria-haspopup='true'
               >
-                <Avatar sx={{ bgcolor: grey[50], width: 24, height: 24 }}>
-                  <PersonIcon fontSize='small' color='tripfare' />
-                </Avatar>
+                {user?.profile_picture ? (
+                  <Avatar
+                    sx={{ width: 36, height: 36 }}
+                    alt={`${user.first_name} ${user.last_name}`}
+                    src={`${apiUrl}/${user.profile_picture.path}`}
+                  />
+                ) : (
+                  <Avatar sx={{ bgcolor: grey[50], width: 24, height: 24 }}>
+                    <PersonIcon fontSize='small' color='tripfare' />
+                  </Avatar>
+                )}
               </IconButton>
             </Tooltip>
             <Menu
