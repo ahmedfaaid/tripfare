@@ -16,7 +16,7 @@ export default function AuthProvider({ children }) {
       setLoading(true);
 
       const req = await fetch(`${apiUrl}/auth/me`, {
-        method: 'POST'
+        credentials: 'include'
       });
       const res = await req.json();
 
@@ -42,6 +42,7 @@ export default function AuthProvider({ children }) {
           headers: {
             'Content-Type': 'application/json'
           },
+          credentials: 'include',
           body: JSON.stringify(data)
         });
         const res = await req.json();
