@@ -1,3 +1,4 @@
+'use client';
 import { AuthContext } from '@/context/auth';
 import { Container } from '@mui/material';
 import { useParams, useRouter } from 'next/navigation';
