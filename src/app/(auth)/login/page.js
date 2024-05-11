@@ -141,8 +141,8 @@ export default function Login() {
             </Link>
           </Grid>
           <Grid item>
-            <Link href='#' variant='body' sx={{ color: 'inherit' }}>
-              Don&apos;t have an account? Sign Up
+            <Link href='/register' variant='body' sx={{ color: 'inherit' }}>
+              Don&apos;t have an account? Register
             </Link>
           </Grid>
         </Grid>
