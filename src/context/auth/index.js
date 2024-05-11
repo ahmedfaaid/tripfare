@@ -70,6 +70,47 @@ export default function AuthProvider({ children }) {
         await fetch(`${apiUrl}/auth/logout`);
         setUser(null);
         setLoading(false);
+      },
+      register: async (data) => {
+        setLoading(true);
+
+        const { confirm_password, profile_picture, ...rest } = data;
+
+        if (confirm_password !== rest.password) {
+          setUser(null);
+          setLoading(false);
+          return {
+            ok: false,
+            response: 'Passwords do not match'
+          };
+        }
+
+        const req = await fetch(`${apiUrl}/auth/register`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+          credentials: 'include',
+          body: JSON.stringify({ data: { ...rest }, profile_picture })
+        });
+        const res = await req.json();
+
+        if (res.statusCode === 400) {
+          setUser(null);
+          setLoading(false);
+          return {
+            ok: false,
+            response: 'There was an error. Please try again.'
+          };
+        }
+
+        setUser(res);
+        router.push(params.redirect ? `${params.redirect}` : '/');
+        setLoading(false);
+        return {
+          ok: true,
+          response: res
+        };
       }
     }),
     [router, params]
