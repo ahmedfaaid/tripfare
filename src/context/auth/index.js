@@ -85,13 +85,16 @@ export default function AuthProvider({ children }) {
           };
         }
 
+        const formData = new FormData();
+        if (profile_picture) {
+          formData.append('profile_picture', profile_picture);
+        }
+        formData.append('data', JSON.stringify(rest));
+
         const req = await fetch(`${apiUrl}/auth/register`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          },
           credentials: 'include',
-          body: JSON.stringify({ data: { ...rest }, profile_picture })
+          body: formData
         });
         const res = await req.json();
 
@@ -100,7 +103,16 @@ export default function AuthProvider({ children }) {
           setLoading(false);
           return {
             ok: false,
-            response: 'There was an error. Please try again.'
+            response: res.error
+          };
+        }
+
+        if (res.statusCode === 500) {
+          setUser(null);
+          setLoading(false);
+          return {
+            ok: false,
+            response: 'Oops something went wrong.'
           };
         }
 
