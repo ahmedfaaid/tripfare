@@ -75,7 +75,6 @@ export default function Navbar() {
     authContext: { logout }
   } = useContext(AuthContext);
   const router = useRouter();
-  console.log({ user });
 
   const handleOpenUserMenu = (event) => {
     if (!user) {
