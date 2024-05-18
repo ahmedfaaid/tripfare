@@ -67,7 +67,9 @@ export default function AuthProvider({ children }) {
       },
       logout: async () => {
         setLoading(true);
-        await fetch(`${apiUrl}/auth/logout`);
+        await fetch(`${apiUrl}/auth/logout`, {
+          method: 'POST'
+        });
         setUser(null);
         setLoading(false);
       },
