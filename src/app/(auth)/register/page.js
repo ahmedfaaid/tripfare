@@ -2,10 +2,10 @@
 import { AuthContext } from '@/context/auth';
 import { registerSchema } from '@/lib/forms';
 import { US_States } from '@/lib/locations';
-import { CheckBox } from '@mui/icons-material';
 import {
   Box,
   Button,
+  Checkbox,
   FormControl,
   FormControlLabel,
   InputLabel,
@@ -16,47 +16,47 @@ import {
 } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { useFormik } from 'formik';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 export default function Register() {
   const {
     authContext: { register }
   } = useContext(AuthContext);
+  const [checked, setChecked] = useState(false);
 
-  const {
-    handleSubmit,
-    handleChange,
-    values,
-    touched,
-    errors,
-    status,
-    setValues
-  } = useFormik({
-    initialValues: {
-      first_name: '',
-      last_name: '',
-      username: '',
-      password: '',
-      confirm_password: '',
-      date_of_birth: '1990-01-01',
-      occupation: '',
-      gender: '',
-      address: {
-        line_1: '',
-        line_2: '',
-        city: '',
-        state: '',
-        country: 'United States of America'
+  const { handleSubmit, handleChange, values, touched, errors, status } =
+    useFormik({
+      initialValues: {
+        first_name: '',
+        last_name: '',
+        username: '',
+        password: '',
+        confirm_password: '',
+        date_of_birth: '1990-01-01',
+        occupation: '',
+        gender: '',
+        address: {
+          line_1: '',
+          line_2: '',
+          city: '',
+          state: '',
+          country: 'United States of America'
+        },
+        profile_picture: null
       },
-      profile_picture: null
-    },
-    initialStatus: null,
-    enableReinitialize: true,
-    validationSchema: registerSchema,
-    onSubmit: async (values, { setStatus }) => {
-      console.log({ values });
-    }
-  });
+      initialStatus: null,
+      enableReinitialize: true,
+      validationSchema: registerSchema,
+      onSubmit: async (values, { setStatus }) => {
+        const res = await register(values);
+
+        if (!res.ok) {
+          setStatus({ response: res.response });
+        } else {
+          setStatus(null);
+        }
+      }
+    });
 
   return (
     <Box
@@ -137,18 +137,39 @@ export default function Register() {
           )}
         </Box>
         <Box sx={{ marginTop: 4 }}>
-          <TextField
-            id='email'
-            name='email'
-            label='Email Address'
-            variant='outlined'
-            fullWidth
-            color='tripfare'
-            required
-            autoComplete='email'
-            onChange={handleChange}
-            value={values.email}
-          />
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}
+          >
+            <TextField
+              id='email'
+              name='email'
+              label='Email Address'
+              variant='outlined'
+              fullWidth
+              color='tripfare'
+              required
+              autoComplete='email'
+              onChange={handleChange}
+              value={values.email}
+              sx={{ width: '45%' }}
+            />
+            <TextField
+              id='username'
+              name='username'
+              label='Username'
+              variant='outlined'
+              fullWidth
+              color='tripfare'
+              required
+              onChange={handleChange}
+              value={values.username}
+              sx={{ width: '45%' }}
+            />
+          </Box>
         </Box>
         <Box
           sx={{
@@ -217,21 +238,27 @@ export default function Register() {
             value={values.occupation}
             sx={{ width: '30%' }}
           />
-          <TextField
-            id='gender'
-            name='gender'
-            label='Gender'
-            select
+          <FormControl
+            sx={{
+              width: '30%'
+            }}
             variant='outlined'
             color='tripfare'
             required
-            onChange={handleChange}
-            value={values.gender}
-            sx={{ width: '30%' }}
           >
-            <MenuItem value='male'>Male</MenuItem>
-            <MenuItem value='female'>Female</MenuItem>
-          </TextField>
+            <InputLabel id='gender-select'>Gender</InputLabel>
+            <Select
+              labelId='gender-select'
+              id='gender'
+              name='gender'
+              value={values.gender}
+              label='Gender'
+              onChange={handleChange}
+            >
+              <MenuItem value='male'>Male</MenuItem>
+              <MenuItem value='female'>Female</MenuItem>
+            </Select>
+          </FormControl>
         </Box>
         <Box
           sx={{
@@ -334,10 +361,15 @@ export default function Register() {
         }}
       >
         <FormControlLabel
-          control={<CheckBox sx={{ marginRight: 1 }} />}
+          control={
+            <Checkbox
+              color='tripfare'
+              checked={checked}
+              onChange={() => setChecked(!checked)}
+            />
+          }
           label='I agree to the Terms of Service and Privacy Policy.'
           required
-          sx={{ marginLeft: 0 }}
         />
       </Box>
       <Box sx={{ marginTop: 4 }}>
