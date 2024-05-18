@@ -38,7 +38,7 @@ export const registerSchema = Yup.object().shape({
     .test(
       'fileSize',
       'File exceeds the maximum supported size of 14 MB',
-      (value) => value && value.size <= 1024 * 1024 * 14
+      (value) => value && value.size >= 1024 * 1024 * 14
     )
     .test(
       'format',
