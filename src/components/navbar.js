@@ -171,14 +171,20 @@ export default function Navbar() {
                 inputProps={{ 'aria-label': 'search' }}
               />
             </Search>
-            <BorderColorIcon
-              fontSize='medium'
+            <IconButton
+              href='/posts/create'
               sx={{
-                display: { xs: 'none', md: 'flex' },
-                mx: 3,
-                color: grey[50]
+                mx: 3
               }}
-            />
+            >
+              <BorderColorIcon
+                fontSize='medium'
+                sx={{
+                  display: { xs: 'none', md: 'flex' },
+                  color: grey[50]
+                }}
+              />
+            </IconButton>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
