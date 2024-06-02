@@ -1,4 +1,3 @@
-import { supported_formats } from '@/utils/constants';
 import * as Yup from 'yup';
 
 export const loginSchema = Yup.object().shape({
@@ -31,18 +30,18 @@ export const registerSchema = Yup.object().shape({
   date_of_birth: Yup.date().required(),
   occupation: Yup.string().required(),
   gender: Yup.string().oneOf(['male', 'female']),
-  address: addressSchema,
-  profile_picture: Yup.mixed()
-    .nullable()
-    .notRequired()
-    .test(
-      'fileSize',
-      'File exceeds the maximum supported size of 14 MB',
-      (value) => value && value.size >= 1024 * 1024 * 14
-    )
-    .test(
-      'format',
-      'Supported file types: ".jpeg", ".jpg" and ".png"',
-      (value) => value && supported_formats.includes(value.type)
-    )
+  address: addressSchema
+  // profile_picture: Yup.mixed()
+  //   .nullable()
+  //   .notRequired()
+  //   .test(
+  //     'fileSize',
+  //     'File exceeds the maximum supported size of 14 MB',
+  //     (value) => value && value.size >= 1024 * 1024 * 14
+  //   )
+  //   .test(
+  //     'format',
+  //     'Supported file types: ".jpeg", ".jpg" and ".png"',
+  //     (value) => value && supported_formats.includes(value.type)
+  //   )
 });
