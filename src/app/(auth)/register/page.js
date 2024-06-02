@@ -41,8 +41,7 @@ export default function Register() {
           city: '',
           state: '',
           country: 'United States of America'
-        },
-        profile_picture: null
+        }
       },
       initialStatus: null,
       enableReinitialize: true,
@@ -84,92 +83,73 @@ export default function Register() {
         </Typography>
       )}
       <Box sx={{ marginTop: 2 }}>
-        <Box>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between'
-            }}
-          >
-            <TextField
-              id='first_name'
-              name='first_name'
-              label='First Name'
-              variant='outlined'
-              color='tripfare'
-              required
-              onChange={handleChange}
-              value={values.first_name}
-              sx={{ width: '45%' }}
-            />
-            <TextField
-              id='last_name'
-              name='last_name'
-              label='Last Name'
-              variant='outlined'
-              color='tripfare'
-              required
-              onChange={handleChange}
-              value={values.last_name}
-              sx={{ width: '45%' }}
-            />
-          </Box>
-          {touched.first_name && errors.first_name && (
-            <Typography
-              sx={{
-                color: red[300],
-                marginTop: 1
-              }}
-            >
-              {errors.first_name}
-            </Typography>
-          )}
-          {touched.last_name && errors.last_name && (
-            <Typography
-              sx={{
-                color: red[300],
-                marginTop: 1
-              }}
-            >
-              {errors.last_name}
-            </Typography>
-          )}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}
+        >
+          <TextField
+            id='first_name'
+            name='first_name'
+            label='First Name'
+            variant='outlined'
+            color='tripfare'
+            required
+            onChange={handleChange}
+            value={values.first_name}
+            sx={{ width: '45%' }}
+            error={touched.first_name && errors.first_name}
+          />
+          <TextField
+            id='last_name'
+            name='last_name'
+            label='Last Name'
+            variant='outlined'
+            color='tripfare'
+            required
+            onChange={handleChange}
+            value={values.last_name}
+            sx={{ width: '45%' }}
+            error={touched.last_name && errors.last_name}
+          />
         </Box>
-        <Box sx={{ marginTop: 4 }}>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between'
-            }}
-          >
-            <TextField
-              id='email'
-              name='email'
-              label='Email Address'
-              variant='outlined'
-              fullWidth
-              color='tripfare'
-              required
-              autoComplete='email'
-              onChange={handleChange}
-              value={values.email}
-              sx={{ width: '45%' }}
-            />
-            <TextField
-              id='username'
-              name='username'
-              label='Username'
-              variant='outlined'
-              fullWidth
-              color='tripfare'
-              required
-              onChange={handleChange}
-              value={values.username}
-              sx={{ width: '45%' }}
-            />
-          </Box>
+        <Box
+          sx={{
+            marginTop: 4,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}
+        >
+          <TextField
+            id='email'
+            name='email'
+            label='Email Address'
+            variant='outlined'
+            fullWidth
+            color='tripfare'
+            required
+            autoComplete='email'
+            onChange={handleChange}
+            value={values.email}
+            sx={{ width: '45%' }}
+            error={touched.email && errors.email}
+          />
+          <TextField
+            id='username'
+            name='username'
+            label='Username'
+            variant='outlined'
+            fullWidth
+            color='tripfare'
+            required
+            onChange={handleChange}
+            value={values.username}
+            sx={{ width: '45%' }}
+            error={touched.username && errors.username}
+          />
         </Box>
         <Box
           sx={{
@@ -191,6 +171,7 @@ export default function Register() {
             onChange={handleChange}
             value={values.password}
             sx={{ width: '45%' }}
+            error={touched.password && errors.password}
           />
           <TextField
             id='confirm_password'
@@ -204,6 +185,7 @@ export default function Register() {
             onChange={handleChange}
             value={values.confirm_password}
             sx={{ width: '45%' }}
+            error={touched.confirm_password && errors.confirm_password}
           />
         </Box>
         <Box
@@ -225,6 +207,7 @@ export default function Register() {
             onChange={handleChange}
             value={values.date_of_birth}
             sx={{ width: '30%' }}
+            error={touched.date_of_birth && errors.date_of_birth}
           />
           <TextField
             id='occupation'
@@ -237,6 +220,7 @@ export default function Register() {
             onChange={handleChange}
             value={values.occupation}
             sx={{ width: '30%' }}
+            error={touched.occupation && errors.occupation}
           />
           <FormControl
             sx={{
@@ -245,6 +229,7 @@ export default function Register() {
             variant='outlined'
             color='tripfare'
             required
+            error={touched.gender && errors.gender}
           >
             <InputLabel id='gender-select'>Gender</InputLabel>
             <Select
@@ -275,6 +260,7 @@ export default function Register() {
             required
             onChange={handleChange}
             value={values.address.line_1}
+            error={touched.address?.line_1 && errors.address?.line_1}
           />
         </Box>
         <Box
@@ -291,6 +277,7 @@ export default function Register() {
             color='tripfare'
             onChange={handleChange}
             value={values.address.line_2}
+            error={touched.address?.line_2 && errors.address?.line_2}
           />
         </Box>
         <Box
@@ -311,6 +298,7 @@ export default function Register() {
             onChange={handleChange}
             value={values.address.city}
             sx={{ width: '30%' }}
+            error={touched.address?.city && errors.address?.city}
           />
           <FormControl
             sx={{
@@ -319,6 +307,7 @@ export default function Register() {
             variant='outlined'
             color='tripfare'
             required
+            error={touched.address?.state && errors.address?.state}
           >
             <InputLabel id='address-state'>State</InputLabel>
             <Select
