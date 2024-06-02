@@ -45,3 +45,21 @@ export const registerSchema = Yup.object().shape({
   //     (value) => value && supported_formats.includes(value.type)
   //   )
 });
+
+export const postSchema = Yup.object().shape({
+  title: Yup.string().required().min(3, 'Please provide a longer title'),
+  region: Yup.string().required(),
+  country: Yup.string().required(),
+  city: Yup.string().required(),
+  details: Yup.string().required(),
+  media: Yup.array().of(Yup.mixed().required()),
+  length_of_stay: Yup.array().min(2).max(2),
+  date_travelled: Yup.date().required(),
+  size_of_group: Yup.number(),
+  total_budget: Yup.object({
+    accommodation: Yup.number().positive(),
+    food_drinks: Yup.number().positive(),
+    activities: Yup.number().positive(),
+    transportation: Yup.number().positive()
+  })
+});
