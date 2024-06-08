@@ -7,6 +7,7 @@ import { Box, Container, CssBaseline, Grid } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import { CookiesProvider } from 'react-cookie';
+import '../styles/global.css';
 
 export default function RootLayout({ children }) {
   return (
