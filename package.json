@@ -22,6 +22,8 @@
     "react": "^18",
     "react-cookie": "^7.1.0",
     "react-dom": "^18",
+    "react-trix-rte": "^1.0.16",
+    "trix": "^2.1.1",
     "yup": "^1.4.0"
   },
   "devDependencies": {
