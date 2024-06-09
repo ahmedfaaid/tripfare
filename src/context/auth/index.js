@@ -1,13 +1,10 @@
 'use client';
 import { apiUrl } from '@/utils/constants';
-import { useParams, useRouter } from 'next/navigation';
 import { createContext, useEffect, useMemo, useState } from 'react';
 
 export const AuthContext = createContext(null);
 
 export default function AuthProvider({ children }) {
-  const router = useRouter();
-  const params = useParams();
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
 
@@ -58,7 +55,6 @@ export default function AuthProvider({ children }) {
         }
 
         setUser(res);
-        router.push(params.redirect ? `${params.redirect}` : '/');
         setLoading(false);
         return {
           ok: true,
@@ -68,7 +64,7 @@ export default function AuthProvider({ children }) {
       logout: async () => {
         setLoading(true);
         await fetch(`${apiUrl}/auth/logout`, {
-          method: 'POST'
+          method: 'DELETE'
         });
         setUser(null);
         setLoading(false);
@@ -119,7 +115,6 @@ export default function AuthProvider({ children }) {
         }
 
         setUser(res);
-        router.push(params.redirect ? `${params.redirect}` : '/');
         setLoading(false);
         return {
           ok: true,
@@ -127,7 +122,7 @@ export default function AuthProvider({ children }) {
         };
       }
     }),
-    [router, params]
+    []
   );
 
   return (
