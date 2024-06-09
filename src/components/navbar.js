@@ -88,6 +88,11 @@ export default function Navbar() {
     setAnchorElUser(null);
   };
 
+  const handleLogout = () => {
+    logout();
+    handleCloseUserMenu();
+  };
+
   return (
     <AppBar position='static' color='tripfare'>
       <Container maxWidth='lg'>
@@ -172,7 +177,7 @@ export default function Navbar() {
               />
             </Search>
             <IconButton
-              href='/posts/create'
+              href={user ? '/posts/create' : '/login?redirect=posts/create'}
               sx={{
                 mx: 3
               }}
@@ -226,7 +231,7 @@ export default function Navbar() {
               <MenuItem onClick={() => router.push('/profile')}>
                 <Typography textAlign='center'>Profile</Typography>
               </MenuItem>
-              <MenuItem onClick={logout}>
+              <MenuItem onClick={handleLogout}>
                 <Typography textAlign='center'>Logout</Typography>
               </MenuItem>
             </Menu>
