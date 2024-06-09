@@ -1,19 +1,20 @@
 'use client';
 import { AuthContext } from '@/context/auth';
 import { Container } from '@mui/material';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useContext, useEffect } from 'react';
 
 export default function LoginDashboard({ children }) {
   const { user } = useContext(AuthContext);
   const router = useRouter();
-  const params = useParams();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get('redirect');
 
   useEffect(() => {
     if (user) {
-      router.replace(params.redirect ? `${params.redirect}` : '/');
+      router.replace(redirect ? `${redirect}` : '/');
     }
-  }, [user, params.redirect, router]);
+  }, [user, redirect, router]);
 
   return (
     <Container

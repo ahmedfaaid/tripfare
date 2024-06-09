@@ -14,16 +14,12 @@ import {
 } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { useFormik } from 'formik';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { useContext } from 'react';
 
 export default function Login() {
   const {
     authContext: { login }
   } = useContext(AuthContext);
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const redirect = searchParams.get('redirect');
 
   const { handleSubmit, handleChange, values, touched, errors, status } =
     useFormik({
@@ -40,9 +36,6 @@ export default function Login() {
           setStatus({ response: res.response });
         } else {
           setStatus(null);
-          if (redirect) {
-            router.replace(`/${redirect}`);
-          }
         }
       }
     });
