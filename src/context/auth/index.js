@@ -61,11 +61,11 @@ export default function AuthProvider({ children }) {
           response: res
         };
       },
-      logout: async () => {
+      logout: () => {
         setLoading(true);
-        await fetch(`${apiUrl}/auth/logout`, {
-          method: 'DELETE'
-        });
+        fetch(`${apiUrl}/auth/logout`, {
+          credentials: 'include'
+        }).then((res) => console.log('Deleted'));
         setUser(null);
         setLoading(false);
       },
