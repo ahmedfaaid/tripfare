@@ -13,7 +13,10 @@ const theme = createTheme({
     tripfare: {
       main: '#62558B'
     },
-    soot: '#160D08',
+    soot: {
+      main: '#160D08',
+      light: '#8c8c8c'
+    },
     cardWhite: '#FFFDFC',
     olive: '#448F74'
   },
