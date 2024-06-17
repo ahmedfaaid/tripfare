@@ -213,7 +213,9 @@ export default function Create() {
               margin: 0
             }}
           >
-            <legend>How long did you stay?</legend>
+            <legend className='fieldset-legend-required'>
+              How long did you stay?
+            </legend>
             <TextField
               id='length_of_stay.num'
               name='length_of_stay.num'
@@ -223,6 +225,11 @@ export default function Create() {
               onChange={handleChange}
               sx={{
                 marginTop: 2
+              }}
+              InputLabelProps={{
+                sx: {
+                  display: 'none'
+                }
               }}
             />
             <FormControl
@@ -258,7 +265,9 @@ export default function Create() {
               component='fieldset'
               sx={{ border: 'none', padding: 0, margin: 0 }}
             >
-              <legend>Select month and year travelled</legend>
+              <legend className='fieldset-legend-required'>
+                Select month and year travelled
+              </legend>
               <FormControl
                 sx={{
                   width: 150,
@@ -305,7 +314,9 @@ export default function Create() {
               component='fieldset'
               sx={{ border: 'none', padding: 0, margin: 0 }}
             >
-              <legend>Select size of group</legend>
+              <legend className='fieldset-legend-required'>
+                Select size of group
+              </legend>
               <TextField
                 id='size_of_group'
                 name='size_of_group'
@@ -329,7 +340,11 @@ export default function Create() {
             Budgeting
           </Typography>
           <Box sx={{ marginTop: 4 }}>
-            <InputLabel htmlFor='total_budget' sx={{ color: 'soot' }}>
+            <InputLabel
+              htmlFor='total_budget'
+              sx={{ color: 'soot.main' }}
+              required
+            >
               Total budget
             </InputLabel>
             <TextField
@@ -347,7 +362,11 @@ export default function Create() {
           </Box>
           <Grid container sx={{ marginTop: 4 }} spacing={2}>
             <Grid item xs={12} sm={3}>
-              <InputLabel htmlFor='budget.accommodation' sx={{ color: 'soot' }}>
+              <InputLabel
+                htmlFor='budget.accommodation'
+                sx={{ color: 'soot.main' }}
+                required
+              >
                 Accommodation
               </InputLabel>
               <TextField
@@ -379,7 +398,11 @@ export default function Create() {
               </Button>
             </Grid>
             <Grid item xs={12} sm={3}>
-              <InputLabel htmlFor='budget.food_drinks' sx={{ color: 'soot' }}>
+              <InputLabel
+                htmlFor='budget.food_drinks'
+                sx={{ color: 'soot.main' }}
+                required
+              >
                 Food and Drinks
               </InputLabel>
               <TextField
@@ -411,7 +434,11 @@ export default function Create() {
               </Button>
             </Grid>
             <Grid item xs={12} sm={3}>
-              <InputLabel htmlFor='budget.activities' sx={{ color: 'soot' }}>
+              <InputLabel
+                htmlFor='budget.activities'
+                sx={{ color: 'soot.main' }}
+                required
+              >
                 Activities
               </InputLabel>
               <TextField
@@ -445,7 +472,8 @@ export default function Create() {
             <Grid item xs={12} sm={3}>
               <InputLabel
                 htmlFor='budget.transportation'
-                sx={{ color: 'soot' }}
+                sx={{ color: 'soot.main' }}
+                required
               >
                 Transportation
               </InputLabel>
