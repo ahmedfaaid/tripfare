@@ -66,7 +66,7 @@ export default function Register() {
       <Typography
         component='h2'
         variant='h4'
-        sx={{ textAlign: 'center', color: 'soot', marginBottom: 4 }}
+        sx={{ textAlign: 'center', color: 'soot.main', marginBottom: 4 }}
       >
         Register
       </Typography>

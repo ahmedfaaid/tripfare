@@ -49,7 +49,7 @@ export default function Login() {
       <Typography
         component='h2'
         variant='h4'
-        sx={{ textAlign: 'center', color: 'soot', marginBottom: 4 }}
+        sx={{ textAlign: 'center', color: 'soot.main', marginBottom: 4 }}
       >
         Login
       </Typography>

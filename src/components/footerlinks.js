@@ -29,7 +29,7 @@ export default function FooterLinks() {
             }}
             href='#'
             underline='hover'
-            color='soot'
+            color='soot.main'
           >
             {link}
           </Link>

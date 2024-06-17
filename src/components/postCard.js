@@ -40,12 +40,12 @@ export default function PostCard({ post, index }) {
         }
         title={
           <Box>
-            <Typography component='p' sx={{ fontSize: 14, color: 'soot' }}>
+            <Typography component='p' sx={{ fontSize: 14, color: 'soot.main' }}>
               <Link
                 href='/profile'
                 sx={{
                   fontWeight: 500,
-                  color: 'soot'
+                  color: 'soot.main'
                 }}
                 underline='hover'
               >
@@ -58,7 +58,7 @@ export default function PostCard({ post, index }) {
               in{' '}
               <Link
                 href={`/tags/${post.location}`}
-                sx={{ fontWeight: 500, color: 'soot' }}
+                sx={{ fontWeight: 500, color: 'soot.main' }}
                 underline='hover'
               >
                 {post.location}
@@ -74,7 +74,7 @@ export default function PostCard({ post, index }) {
               sx={{
                 fontWeight: 500,
                 marginTop: 1,
-                color: 'soot',
+                color: 'soot.main',
                 fontSize: 14
               }}
             >

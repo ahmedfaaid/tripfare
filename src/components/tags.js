@@ -16,7 +16,7 @@ export default function Tags() {
       <List>
         {tags.map((tag) => (
           <ListItem key={tag}>
-            <Link href='#' underline='hover' color='soot'>
+            <Link href='#' underline='hover' color='soot.main'>
               {tag}
             </Link>
           </ListItem>
