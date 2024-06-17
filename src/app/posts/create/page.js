@@ -191,6 +191,7 @@ export default function Create() {
               id='files'
               name='files'
               type='file'
+              multiple
               className='upload-attachment-input'
             />
             <label htmlFor='files' className='upload-attachment-btn'>
@@ -243,6 +244,7 @@ export default function Create() {
                 id='length_of_stay.period'
                 name='length_of_stay.period'
                 value={values.length_of_stay.period}
+                required
                 onChange={handleChange}
               >
                 <MenuItem value='days'>Day(s)</MenuItem>
@@ -278,6 +280,7 @@ export default function Create() {
                   id='date_travelled.month'
                   name='date_travelled.month'
                   value={values.date_travelled.month}
+                  required
                   onChange={handleChange}
                 >
                   {months.map((month) => (
@@ -298,6 +301,7 @@ export default function Create() {
                   id='date_travelled.year'
                   name='date_travelled.year'
                   value={values.date_travelled.year}
+                  required
                   onChange={handleChange}
                 >
                   {generateYears().map((year) => (
@@ -350,6 +354,7 @@ export default function Create() {
             <TextField
               id='total_budget'
               name='total_budget'
+              value={values.total_budget}
               type='number'
               required
               InputProps={{
@@ -373,6 +378,7 @@ export default function Create() {
                 id='budget.accommodation'
                 name='budget.accommodation'
                 type='number'
+                value={values.budget.accommodation}
                 required
                 InputProps={{
                   startAdornment: (
@@ -408,6 +414,7 @@ export default function Create() {
               <TextField
                 id='budget.food_drinks'
                 name='budget.food_drinks'
+                value={values.budget.food_drinks}
                 type='number'
                 required
                 InputProps={{
@@ -444,6 +451,7 @@ export default function Create() {
               <TextField
                 id='budget.activities'
                 name='budget.activities'
+                value={values.budget.activities}
                 type='number'
                 required
                 InputProps={{
@@ -480,6 +488,7 @@ export default function Create() {
               <TextField
                 id='budget.transportation'
                 name='budget.transportation'
+                value={values.budget.transportation}
                 type='number'
                 required
                 InputProps={{
