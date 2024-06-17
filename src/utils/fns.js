@@ -8,3 +8,17 @@ export function slugify(str) {
     .replace(/\s+/g, '-') // replace spaces with hyphens
     .replace(/-+/g, '-'); // remove consecutive hyphens
 }
+
+export function generateYears() {
+  const now = new Date().getFullYear();
+  const min = now - 2;
+  const max = now + 5;
+
+  let list = [];
+
+  for (let i = min; i <= max; i++) {
+    list.push(i);
+  }
+
+  return list;
+}
