@@ -37,3 +37,7 @@
 .upload-attachment-input {
   display: none;
 }
+
+.fieldset-legend-required::after {
+  content: ' *';
+}
