@@ -6,6 +6,8 @@ import { Regions } from '@/lib/locations';
 import { generateYears } from '@/utils/fns';
 import { Add, Image } from '@mui/icons-material';
 import {
+  Avatar,
+  AvatarGroup,
   Box,
   Button,
   FormControl,
@@ -19,7 +21,7 @@ import {
 } from '@mui/material';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 const months = [
   'Jan',
@@ -38,7 +40,10 @@ const months = [
 
 export default function Create() {
   const { loading, user } = useContext(AuthContext);
+  const [files, setFiles] = useState([]);
   const router = useRouter();
+
+  const urls = files.map((file) => URL.createObjectURL(file));
 
   useEffect(() => {
     if (loading) {
@@ -83,6 +88,10 @@ export default function Create() {
         console.log({ values });
       }
     });
+
+  const handleUpload = (e) => {
+    setFiles([...e.target.files]);
+  };
 
   return (
     <Box
@@ -188,18 +197,56 @@ export default function Create() {
         <Grid container sx={{ marginTop: 8 }}>
           <Grid item xs={12} sm={4}>
             <input
-              id='files'
-              name='files'
+              id='media'
+              name='media'
               type='file'
+              accept='image/*'
               multiple
               className='upload-attachment-input'
+              onChange={(e) => handleUpload(e)}
             />
-            <label htmlFor='files' className='upload-attachment-btn'>
+            <label htmlFor='media' className='upload-attachment-btn'>
               <Image alt='Image icon' />
               <span>Add Image & Video</span>
             </label>
           </Grid>
-          <Grid item xs={12} sm={8}></Grid>
+          <Grid item xs={12} sm={8}>
+            {urls.length >= 1 ? (
+              <AvatarGroup max={20}>
+                {urls.map((url, i) => {
+                  const filename = files[i].name;
+                  return (
+                    <Avatar
+                      key={i}
+                      alt={filename}
+                      src={url}
+                      sx={{
+                        width: 56,
+                        height: 56
+                      }}
+                    />
+                  );
+                })}
+              </AvatarGroup>
+            ) : (
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  height: '100%'
+                }}
+              >
+                <Typography
+                  sx={{
+                    color: 'soot.light',
+                    marginLeft: 2
+                  }}
+                >
+                  No files selected...
+                </Typography>
+              </Box>
+            )}
+          </Grid>
         </Grid>
         <Box
           sx={{
