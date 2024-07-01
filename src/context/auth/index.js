@@ -65,7 +65,7 @@ export default function AuthProvider({ children }) {
         setLoading(true);
         fetch(`${apiUrl}/auth/logout`, {
           credentials: 'include'
-        }).then((res) => console.log('Deleted'));
+        });
         setUser(null);
         setLoading(false);
       },
