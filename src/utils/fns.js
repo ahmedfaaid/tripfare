@@ -22,3 +22,48 @@ export function generateYears() {
 
   return list;
 }
+
+export const omitFields = (obj, keys) => {
+  if (!keys.length) return obj;
+
+  const result = { ...obj };
+  keys.forEach((prop) => {
+    delete result[prop];
+  });
+  return result;
+};
+
+export function reshapePostFields(rawPost) {
+  if (!rawPost) return null;
+
+  const newPost = {
+    ...rawPost,
+    size_of_group: +rawPost.size_of_group,
+    length_of_stay: {
+      num: +rawPost.length_of_stay_num,
+      period: rawPost.length_of_stay_period
+    },
+    date_travelled: {
+      month: rawPost.date_travelled_month,
+      year: +rawPost.date_travelled_year
+    },
+    total_budget: +rawPost.total_budget,
+    budget: {
+      accommodation: +rawPost.budget_accommodation,
+      food_drinks: +rawPost.budget_food_drinks,
+      activities: +rawPost.budget_activities,
+      transportation: +rawPost.budget_transportation
+    }
+  };
+
+  return omitFields(newPost, [
+    'length_of_stay_num',
+    'length_of_stay_period',
+    'date_travelled_month',
+    'date_travelled_year',
+    'budget_accommodation',
+    'budget_food_drinks',
+    'budget_activities',
+    'budget_transportation'
+  ]);
+}
