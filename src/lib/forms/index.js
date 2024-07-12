@@ -53,33 +53,27 @@ export const postSchema = Yup.object().shape({
   city: Yup.string().required(),
   details: Yup.string().required(),
   media: Yup.array().of(Yup.mixed().required()),
-  length_of_stay: Yup.object({
-    num: Yup.number().positive().integer(),
-    period: Yup.string().oneOf(['days', 'weeks', 'months'])
-  }),
-  date_travelled: Yup.object({
-    month: Yup.string().oneOf([
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
-    ]),
-    year: Yup.number().positive()
-  }),
+  length_of_stay_num: Yup.number().positive().integer(),
+  length_of_stay_period: Yup.string().oneOf(['days', 'weeks', 'months']),
+  date_travelled_month: Yup.string().oneOf([
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
+  ]),
+  date_travelled_year: Yup.number().positive(),
   size_of_group: Yup.number().positive(),
   total_budget: Yup.number().positive(),
-  budget: Yup.object({
-    accommodation: Yup.number().positive(),
-    food_drinks: Yup.number().positive(),
-    activities: Yup.number().positive(),
-    transportation: Yup.number().positive()
-  })
+  budget_accommodation: Yup.number().positive(),
+  budget_food_drinks: Yup.number().positive(),
+  budget_activities: Yup.number().positive(),
+  budget_transportation: Yup.number().positive()
 });

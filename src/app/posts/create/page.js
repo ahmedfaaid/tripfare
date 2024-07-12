@@ -1,9 +1,10 @@
 'use client';
 import Trix from '@/components/textEditor';
 import { AuthContext } from '@/context/auth';
+import useCreatePost from '@/hooks/useCreatePost';
 import { postSchema } from '@/lib/forms';
 import { Regions } from '@/lib/locations';
-import { generateYears } from '@/utils/fns';
+import { generateYears, reshapePostFields, slugify } from '@/utils/fns';
 import { Add, Image } from '@mui/icons-material';
 import {
   Avatar,
@@ -19,6 +20,7 @@ import {
   TextField,
   Typography
 } from '@mui/material';
+import { red } from '@mui/material/colors';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
@@ -40,8 +42,26 @@ const months = [
 
 export default function Create() {
   const { loading, user } = useContext(AuthContext);
+  const [formFields, setFormFields] = useState({
+    title: '',
+    region: 'North America',
+    country: '',
+    city: '',
+    details: '',
+    length_of_stay_num: 1,
+    length_of_stay_period: 'days',
+    date_travelled_month: 'Jan',
+    date_travelled_year: new Date().getFullYear(),
+    size_of_group: 1,
+    total_budget: 0,
+    budget_accommodation: 0,
+    budget_food_drinks: 0,
+    budget_activities: 0,
+    budget_transportation: 0
+  });
   const [files, setFiles] = useState([]);
   const router = useRouter();
+  const { loading: postLoading, createPost } = useCreatePost();
 
   const urls = files.map((file) => URL.createObjectURL(file));
 
@@ -55,39 +75,39 @@ export default function Create() {
     }
   }, [loading, user, router]);
 
-  const { handleSubmit, handleChange, values, touched, errors, status } =
-    useFormik({
-      initialValues: {
-        title: '',
-        region: 'North America',
-        country: '',
-        city: '',
-        details: '',
-        media: [],
-        length_of_stay: {
-          num: 1,
-          period: 'days'
-        },
-        date_travelled: {
-          month: 'Jan',
-          year: new Date().getFullYear()
-        },
-        size_of_group: 1,
-        total_budget: 0,
-        budget: {
-          accommodation: 0,
-          food_drinks: 0,
-          activities: 0,
-          transportation: 0
-        }
-      },
-      initialStatus: null,
-      enableReinitialize: true,
-      validationSchema: postSchema,
-      onSubmit: async (values, { setStatus }) => {
-        console.log({ values });
+  const { handleSubmit, touched, errors, status } = useFormik({
+    initialValues: {
+      ...formFields,
+      media: files
+    },
+    initialStatus: null,
+    enableReinitialize: true,
+    validationSchema: postSchema,
+    onSubmit: async (values, { setStatus }) => {
+      const reshapedValues = reshapePostFields(values);
+
+      const dataTransformed = {
+        ...reshapedValues,
+        slug: slugify(values.title)
+      };
+
+      const newPost = await createPost(dataTransformed);
+
+      if (!newPost.ok) {
+        setStatus({ response: newPost.response });
+      } else {
+        setStatus(null);
+        router.push(`/posts/${newPost.response.slug}`);
       }
-    });
+    }
+  });
+
+  const handleChange = (e) => {
+    setFormFields((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
 
   const handleUpload = (e) => {
     setFiles([...e.target.files]);
@@ -106,6 +126,18 @@ export default function Create() {
       >
         Create a post
       </Typography>
+      {status && (
+        <Typography
+          sx={{
+            textAlign: 'center',
+            color: red[300],
+            marginTop: 2,
+            marginBottom: 2
+          }}
+        >
+          {status.response}
+        </Typography>
+      )}
       <Box sx={{ marginTop: 2 }}>
         <Box>
           <TextField
@@ -117,7 +149,7 @@ export default function Create() {
             color='tripfare'
             required
             onChange={handleChange}
-            value={values.title}
+            value={formFields.title}
             error={touched.title && errors.title}
           />
         </Box>
@@ -142,7 +174,7 @@ export default function Create() {
               id='region'
               name='region'
               label='Region'
-              value={values.region}
+              value={formFields.region}
               onChange={handleChange}
             >
               {Regions.map((region) => (
@@ -161,7 +193,7 @@ export default function Create() {
             color='tripfare'
             required
             onChange={handleChange}
-            value={values.country}
+            value={formFields.country}
             error={touched.country && errors.country}
             sx={{ width: '30%' }}
           />
@@ -174,7 +206,7 @@ export default function Create() {
             color='tripfare'
             required
             onChange={handleChange}
-            value={values.city}
+            value={formFields.city}
             error={touched.city && errors.city}
             sx={{ width: '30%' }}
           />
@@ -188,7 +220,7 @@ export default function Create() {
           <Trix
             id='details'
             name='details'
-            defaultValue={values.details}
+            defaultValue={formFields.details}
             onChange={handleChange}
             placeholder='Share trip details here...'
             className='editor'
@@ -265,10 +297,10 @@ export default function Create() {
               How long did you stay?
             </legend>
             <TextField
-              id='length_of_stay.num'
-              name='length_of_stay.num'
+              id='length_of_stay_num'
+              name='length_of_stay_num'
               type='number'
-              value={values.length_of_stay.num}
+              value={formFields.length_of_stay_num}
               required
               onChange={handleChange}
               sx={{
@@ -288,9 +320,9 @@ export default function Create() {
               }}
             >
               <Select
-                id='length_of_stay.period'
-                name='length_of_stay.period'
-                value={values.length_of_stay.period}
+                id='length_of_stay_period'
+                name='length_of_stay_period'
+                value={formFields.length_of_stay_period}
                 required
                 onChange={handleChange}
               >
@@ -324,9 +356,9 @@ export default function Create() {
                 }}
               >
                 <Select
-                  id='date_travelled.month'
-                  name='date_travelled.month'
-                  value={values.date_travelled.month}
+                  id='date_travelled_month'
+                  name='date_travelled_month'
+                  value={formFields.date_travelled_month}
                   required
                   onChange={handleChange}
                 >
@@ -345,9 +377,9 @@ export default function Create() {
                 }}
               >
                 <Select
-                  id='date_travelled.year'
-                  name='date_travelled.year'
-                  value={values.date_travelled.year}
+                  id='date_travelled_year'
+                  name='date_travelled_year'
+                  value={formFields.date_travelled_year}
                   required
                   onChange={handleChange}
                 >
@@ -372,7 +404,7 @@ export default function Create() {
                 id='size_of_group'
                 name='size_of_group'
                 type='number'
-                value={values.size_of_group}
+                value={formFields.size_of_group}
                 required
                 onChange={handleChange}
                 sx={{ marginTop: 2 }}
@@ -401,7 +433,7 @@ export default function Create() {
             <TextField
               id='total_budget'
               name='total_budget'
-              value={values.total_budget}
+              value={formFields.total_budget}
               type='number'
               required
               InputProps={{
@@ -410,22 +442,23 @@ export default function Create() {
                 )
               }}
               sx={{ marginTop: 2 }}
+              onChange={handleChange}
             />
           </Box>
           <Grid container sx={{ marginTop: 4 }} spacing={2}>
             <Grid item xs={12} sm={3}>
               <InputLabel
-                htmlFor='budget.accommodation'
+                htmlFor='budget_accommodation'
                 sx={{ color: 'soot.main' }}
                 required
               >
                 Accommodation
               </InputLabel>
               <TextField
-                id='budget.accommodation'
-                name='budget.accommodation'
+                id='budget_accommodation'
+                name='budget_accommodation'
                 type='number'
-                value={values.budget.accommodation}
+                value={formFields.budget_accommodation}
                 required
                 InputProps={{
                   startAdornment: (
@@ -433,6 +466,7 @@ export default function Create() {
                   )
                 }}
                 sx={{ marginTop: 2 }}
+                onChange={handleChange}
               />
               <Button
                 variant='contained'
@@ -452,16 +486,16 @@ export default function Create() {
             </Grid>
             <Grid item xs={12} sm={3}>
               <InputLabel
-                htmlFor='budget.food_drinks'
+                htmlFor='budget_food_drinks'
                 sx={{ color: 'soot.main' }}
                 required
               >
                 Food and Drinks
               </InputLabel>
               <TextField
-                id='budget.food_drinks'
-                name='budget.food_drinks'
-                value={values.budget.food_drinks}
+                id='budget_food_drinks'
+                name='budget_food_drinks'
+                value={formFields.budget_food_drinks}
                 type='number'
                 required
                 InputProps={{
@@ -470,6 +504,7 @@ export default function Create() {
                   )
                 }}
                 sx={{ marginTop: 2 }}
+                onChange={handleChange}
               />
               <Button
                 variant='contained'
@@ -489,16 +524,16 @@ export default function Create() {
             </Grid>
             <Grid item xs={12} sm={3}>
               <InputLabel
-                htmlFor='budget.activities'
+                htmlFor='budget_activities'
                 sx={{ color: 'soot.main' }}
                 required
               >
                 Activities
               </InputLabel>
               <TextField
-                id='budget.activities'
-                name='budget.activities'
-                value={values.budget.activities}
+                id='budget_activities'
+                name='budget_activities'
+                value={formFields.budget_activities}
                 type='number'
                 required
                 InputProps={{
@@ -507,6 +542,7 @@ export default function Create() {
                   )
                 }}
                 sx={{ marginTop: 2 }}
+                onChange={handleChange}
               />
               <Button
                 variant='contained'
@@ -526,16 +562,16 @@ export default function Create() {
             </Grid>
             <Grid item xs={12} sm={3}>
               <InputLabel
-                htmlFor='budget.transportation'
+                htmlFor='budget_transportation'
                 sx={{ color: 'soot.main' }}
                 required
               >
                 Transportation
               </InputLabel>
               <TextField
-                id='budget.transportation'
-                name='budget.transportation'
-                value={values.budget.transportation}
+                id='budget_transportation'
+                name='budget_transportation'
+                value={formFields.budget_transportation}
                 type='number'
                 required
                 InputProps={{
@@ -544,6 +580,7 @@ export default function Create() {
                   )
                 }}
                 sx={{ marginTop: 2 }}
+                onChange={handleChange}
               />
               <Button
                 variant='contained'
@@ -578,9 +615,11 @@ export default function Create() {
         <Button
           variant='outlined'
           color='tripfare'
+          type='submit'
           sx={{
             marginLeft: 4
           }}
+          disabled={postLoading}
         >
           Post
         </Button>

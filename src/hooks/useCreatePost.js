@@ -10,20 +10,24 @@ export default function useCreatePost() {
     const { media, ...rest } = data;
 
     const formData = new FormData();
-    formData.append('media', media);
+    media.forEach((file) => {
+      formData.append('media', file);
+    });
     formData.append('data', JSON.stringify(rest));
 
     const req = await fetch(`${apiUrl}/post`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      credentials: 'include',
       body: formData
     });
 
     const res = await req.json();
 
-    if (res.statusCode === 400 || res.statusCode === 500) {
+    if (
+      res.statusCode === 400 ||
+      res.statusCode === 500 ||
+      res.statusCode === 413
+    ) {
       setLoading(false);
 
       return {
