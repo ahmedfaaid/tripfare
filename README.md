@@ -4,7 +4,7 @@
 - [x] Complete create post page
 - [ ] Followers/Following
 - [ ] Like post
-- [ ] Fetch proper post when navigating to
+- [x] Fetch proper post when navigating to single post page
 
 #### Linking between pages
 
