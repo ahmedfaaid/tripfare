@@ -228,7 +228,7 @@ export default function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={() => router.push('/profile')}>
+              <MenuItem onClick={() => router.push(`/user/${user.username}`)}>
                 <Typography textAlign='center'>Profile</Typography>
               </MenuItem>
               <MenuItem onClick={handleLogout}>
