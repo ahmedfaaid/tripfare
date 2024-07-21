@@ -110,7 +110,7 @@ export default function UserData() {
                 color: grey[700]
               }}
             >
-              Your bio here
+              {user?.bio ? `${user.bio}` : 'Your bio here'}
             </Typography>
           </Box>
         </Box>
@@ -136,7 +136,7 @@ export default function UserData() {
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <LocationOnOutlined />
             <Typography sx={{ fontSize: 14, marginLeft: 1 }}>
-              Cupertino, CA
+              {user?.address.city} {user?.address.state}
             </Typography>
           </Box>
           <Box>
@@ -193,7 +193,7 @@ export default function UserData() {
             <Box>
               <Instagram />
               <Typography sx={{ fontSize: 14, marginLeft: 1 }}>
-                Instagram
+                {user?.instagram ? `${user.instagram}` : 'Instagram'}
               </Typography>
             </Box>
             <Box>
@@ -210,7 +210,7 @@ export default function UserData() {
             <Box>
               <Facebook />
               <Typography sx={{ fontSize: 14, marginLeft: 1 }}>
-                Facebook
+                {user?.facebook ? `${user.facebook}` : 'Facebook'}
               </Typography>
             </Box>
             <Box>
@@ -227,7 +227,7 @@ export default function UserData() {
             <Box>
               <LanguageOutlined />
               <Typography sx={{ fontSize: 14, marginLeft: 1 }}>
-                Website
+                {user?.website ? `${user.website}` : 'Website'}
               </Typography>
             </Box>
             <Box>
