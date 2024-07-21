@@ -21,7 +21,6 @@ export default function UserData() {
       sx={{
         boxShadow: 1,
         borderRadius: 2,
-        mt: 3,
         p: 2,
         backgroundColor: 'cardWhite',
         color: 'soot.main',
