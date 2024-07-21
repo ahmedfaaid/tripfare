@@ -37,7 +37,7 @@ export default function FeedFilter() {
         px: 5,
         borderRadius: 2,
         backgroundColor: 'cardWhite',
-        color: 'soot'
+        color: 'soot.main'
       }}
     >
       <Button
