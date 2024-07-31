@@ -16,8 +16,6 @@ import { useContext } from 'react';
 export default function Following() {
   const { user } = useContext(AuthContext);
 
-  console.log({ user });
-
   return (
     <Box
       sx={{
