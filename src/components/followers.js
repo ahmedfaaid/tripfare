@@ -1,3 +1,6 @@
+import { AuthContext } from '@/context/auth';
+import { apiUrl } from '@/utils/constants';
+import { Person } from '@mui/icons-material';
 import {
   Avatar,
   Box,
@@ -8,31 +11,11 @@ import {
   ListItemText,
   Typography
 } from '@mui/material';
-
-const followers = [
-  {
-    id: 1,
-    username: 'User_3240',
-    image: '/images/pexels-dziana-hasanbekava-7275385.jpg'
-  },
-  {
-    id: 2,
-    username: 'User_3498',
-    image: '/images/pexels-italo-melo-2379004.jpg'
-  },
-  {
-    id: 3,
-    username: 'Coco Chanel',
-    image: '/images/pexels-cottonbro-studio-5850889.jpg'
-  },
-  {
-    id: 4,
-    username: 'Syd Uwa',
-    image: '/images/pexels-andrea-piacquadio-839011.jpg'
-  }
-];
+import { useContext } from 'react';
 
 export default function Followers() {
+  const { user } = useContext(AuthContext);
+
   return (
     <Box
       sx={{
@@ -49,19 +32,34 @@ export default function Followers() {
         fontWeight={600}
         color='soot'
       >
-        {followers.length} followers
+        {user.followers.length} followers
       </Typography>
       <List>
-        {followers.map((follower) => (
-          <ListItem key={follower.id}>
-            <ListItemButton href='#'>
-              <ListItemAvatar>
-                <Avatar alt={follower.username} src={follower.image} />
-              </ListItemAvatar>
-              <ListItemText color='soot'>{follower.username}</ListItemText>
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {user?.followers.length ? (
+          user.followers.map((follower) => (
+            <ListItem key={follower.id}>
+              <ListItemButton href='#'>
+                <ListItemAvatar>
+                  {follower.user.profile_picture ? (
+                    <Avatar
+                      alt={`${follower.user.first_name} ${follower.user.last_name}`}
+                      src={`${apiUrl}/${follower.user.profile_picture.path}`}
+                    />
+                  ) : (
+                    <Avatar>
+                      <Person fontSize='small' color='white' />
+                    </Avatar>
+                  )}
+                </ListItemAvatar>
+                <ListItemText color='soot'>
+                  {follower.user.username}
+                </ListItemText>
+              </ListItemButton>
+            </ListItem>
+          ))
+        ) : (
+          <Typography>You have no followers</Typography>
+        )}
       </List>
     </Box>
   );
