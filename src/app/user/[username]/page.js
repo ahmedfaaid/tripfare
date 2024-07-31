@@ -1,16 +1,14 @@
 'use client';
 import PostCard from '@/components/postCard';
-import { AuthContext } from '@/context/auth';
 import useGetUserPosts from '@/hooks/useGetUserPosts';
 import { Box, Button, Skeleton, Typography } from '@mui/material';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 
 export default function UserPage() {
   const { username } = useParams();
   const [type, setType] = useState('p');
-  const { user } = useContext(AuthContext);
   const { loading, error, posts } = useGetUserPosts(username, type);
 
   return (
