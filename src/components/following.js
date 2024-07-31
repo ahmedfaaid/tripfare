@@ -42,7 +42,7 @@ export default function Following() {
                 <ListItemAvatar>
                   {following.followed_user.profile_picture ? (
                     <Avatar
-                      alt={`${following.followed_user.first_name} ${following.last_name}`}
+                      alt={`${following.followed_user.first_name} ${following.followed_user.last_name}`}
                       src={`${apiUrl}/${following.followed_user.profile_picture.path}`}
                     />
                   ) : (
