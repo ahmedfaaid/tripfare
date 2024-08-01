@@ -1,5 +1,6 @@
 import { AuthContext } from '@/context/auth';
 import { apiUrl, month } from '@/utils/constants';
+import { isFollowing } from '@/utils/fns';
 import {
   Check,
   CircleOutlined,
@@ -11,7 +12,7 @@ import {
   Person,
   PublicOutlined
 } from '@mui/icons-material';
-import { Avatar, Box, IconButton, Typography } from '@mui/material';
+import { Avatar, Box, Button, IconButton, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { useParams } from 'next/navigation';
 import { useContext } from 'react';
@@ -81,7 +82,7 @@ export default function UserData() {
           </Typography>
         </Box>
         <Box>
-          {user.username === username ? (
+          {user?.username === username ? (
             <IconButton aria-label='Edit name and profile picture'>
               <EditOutlined />
             </IconButton>
@@ -122,7 +123,7 @@ export default function UserData() {
           </Box>
         </Box>
         <Box>
-          {user.username === username ? (
+          {user?.username === username ? (
             <IconButton aria-label='Edit bio'>
               <EditOutlined />
             </IconButton>
@@ -151,7 +152,7 @@ export default function UserData() {
             </Typography>
           </Box>
           <Box>
-            {user.username === username ? (
+            {user?.username === username ? (
               <IconButton aria-label='Edit location'>
                 <EditOutlined />
               </IconButton>
@@ -212,11 +213,11 @@ export default function UserData() {
               </Typography>
             </Box>
             <Box>
-              {user.username === username ? (
+              {user?.username === username ? (
                 <IconButton aria-label='Edit instagram'>
                   <EditOutlined />
                 </IconButton>
-              ) : user.instagram ? (
+              ) : user?.instagram ? (
                 <Check />
               ) : (
                 <CircleOutlined />
@@ -235,11 +236,11 @@ export default function UserData() {
               </Typography>
             </Box>
             <Box>
-              {user.username === username ? (
+              {user?.username === username ? (
                 <IconButton aria-label='Edit Facebook'>
                   <EditOutlined />
                 </IconButton>
-              ) : user.facebook ? (
+              ) : user?.facebook ? (
                 <Check />
               ) : (
                 <CircleOutlined />
@@ -258,11 +259,11 @@ export default function UserData() {
               </Typography>
             </Box>
             <Box>
-              {user.username === username ? (
+              {user?.username === username ? (
                 <IconButton aria-label='Edit website'>
                   <EditOutlined />
                 </IconButton>
-              ) : user.website ? (
+              ) : user?.website ? (
                 <Check />
               ) : (
                 <CircleOutlined />
@@ -271,6 +272,29 @@ export default function UserData() {
           </Box>
         </Box>
       </Box>
+      {user?.username !== username && (
+        <>
+          <hr />
+          <Box
+            sx={{
+              marginTop: 2,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <Button
+              variant='contained'
+              sx={{
+                width: '100%'
+              }}
+              color='tripfare'
+            >
+              {isFollowing(username, user?.following) ? 'Unfollow' : 'Follow'}
+            </Button>
+          </Box>
+        </>
+      )}
     </Box>
   );
 }

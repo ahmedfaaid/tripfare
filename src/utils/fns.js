@@ -67,3 +67,9 @@ export function reshapePostFields(rawPost) {
     'budget_transportation'
   ]);
 }
+
+export function isFollowing(username, userFollowing) {
+  return userFollowing?.some(
+    (user) => user.followed_user.username === username
+  );
+}
