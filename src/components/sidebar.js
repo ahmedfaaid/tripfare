@@ -15,7 +15,7 @@ export default function Sidebar() {
 
   return (
     <Box component='aside'>
-      {pathname === `/user/${user?.username}` ? <UserData /> : <Tags />}
+      {pathname.includes('/user/') ? <UserData /> : <Tags />}
       {user && <Followers />}
       {user && <Following />}
       <ContactAndHelp />
