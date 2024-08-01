@@ -11,7 +11,10 @@ const roboto = Roboto({
 const theme = createTheme({
   palette: {
     tripfare: {
-      main: '#62558B'
+      main: '#62558B',
+      light: '#9b90bb',
+      dark: '#38304f',
+      contrastText: '#fff'
     },
     soot: {
       main: '#160D08',
