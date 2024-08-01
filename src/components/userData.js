@@ -1,6 +1,8 @@
 import { AuthContext } from '@/context/auth';
 import { apiUrl, month } from '@/utils/constants';
 import {
+  Check,
+  CircleOutlined,
   EditOutlined,
   Facebook,
   Instagram,
@@ -11,10 +13,12 @@ import {
 } from '@mui/icons-material';
 import { Avatar, Box, IconButton, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
+import { useParams } from 'next/navigation';
 import { useContext } from 'react';
 
 export default function UserData() {
   const { user } = useContext(AuthContext);
+  const { username } = useParams();
 
   return (
     <Box
@@ -77,9 +81,13 @@ export default function UserData() {
           </Typography>
         </Box>
         <Box>
-          <IconButton aria-label='Edit name and profile picture'>
-            <EditOutlined />
-          </IconButton>
+          {user.username === username ? (
+            <IconButton aria-label='Edit name and profile picture'>
+              <EditOutlined />
+            </IconButton>
+          ) : (
+            <Check />
+          )}
         </Box>
       </Box>
       <hr />
@@ -114,9 +122,13 @@ export default function UserData() {
           </Box>
         </Box>
         <Box>
-          <IconButton aria-label='Edit bio'>
-            <EditOutlined />
-          </IconButton>
+          {user.username === username ? (
+            <IconButton aria-label='Edit bio'>
+              <EditOutlined />
+            </IconButton>
+          ) : (
+            <Check />
+          )}
         </Box>
       </Box>
       <hr />
@@ -139,9 +151,13 @@ export default function UserData() {
             </Typography>
           </Box>
           <Box>
-            <IconButton aria-label='Edit bio'>
-              <EditOutlined />
-            </IconButton>
+            {user.username === username ? (
+              <IconButton aria-label='Edit location'>
+                <EditOutlined />
+              </IconButton>
+            ) : (
+              <Check />
+            )}
           </Box>
         </Box>
         <Box
@@ -196,9 +212,15 @@ export default function UserData() {
               </Typography>
             </Box>
             <Box>
-              <IconButton aria-label='Edit instagram'>
-                <EditOutlined />
-              </IconButton>
+              {user.username === username ? (
+                <IconButton aria-label='Edit instagram'>
+                  <EditOutlined />
+                </IconButton>
+              ) : user.instagram ? (
+                <Check />
+              ) : (
+                <CircleOutlined />
+              )}
             </Box>
           </Box>
           <Box
@@ -213,9 +235,15 @@ export default function UserData() {
               </Typography>
             </Box>
             <Box>
-              <IconButton aria-label='Edit Facebook'>
-                <EditOutlined />
-              </IconButton>
+              {user.username === username ? (
+                <IconButton aria-label='Edit Facebook'>
+                  <EditOutlined />
+                </IconButton>
+              ) : user.facebook ? (
+                <Check />
+              ) : (
+                <CircleOutlined />
+              )}
             </Box>
           </Box>
           <Box
@@ -230,9 +258,15 @@ export default function UserData() {
               </Typography>
             </Box>
             <Box>
-              <IconButton aria-label='Edit website'>
-                <EditOutlined />
-              </IconButton>
+              {user.username === username ? (
+                <IconButton aria-label='Edit website'>
+                  <EditOutlined />
+                </IconButton>
+              ) : user.website ? (
+                <Check />
+              ) : (
+                <CircleOutlined />
+              )}
             </Box>
           </Box>
         </Box>
