@@ -1,4 +1,5 @@
 import { AuthContext } from '@/context/auth';
+import useFollowUser from '@/hooks/useFollowUser';
 import { apiUrl, month } from '@/utils/constants';
 import { isFollowing } from '@/utils/fns';
 import {
@@ -20,6 +21,15 @@ import { useContext } from 'react';
 export default function UserData() {
   const { user } = useContext(AuthContext);
   const { username } = useParams();
+  const { loading, followUser, unfollowUser } = useFollowUser();
+
+  const handleFollow = async () => {
+    await followUser(username);
+  };
+
+  const handleUnfollow = async () => {
+    await unfollowUser(username);
+  };
 
   return (
     <Box
@@ -289,6 +299,12 @@ export default function UserData() {
                 width: '100%'
               }}
               color='tripfare'
+              disabled={loading}
+              onClick={
+                isFollowing(username, user?.following)
+                  ? handleUnfollow
+                  : handleFollow
+              }
             >
               {isFollowing(username, user?.following) ? 'Unfollow' : 'Follow'}
             </Button>
