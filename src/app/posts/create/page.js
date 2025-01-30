@@ -4,7 +4,7 @@ import { AuthContext } from '@/context/auth';
 import useCreatePost from '@/hooks/useCreatePost';
 import { postSchema } from '@/lib/forms';
 import { Regions } from '@/lib/locations';
-import { generateYears, reshapePostFields, slugify } from '@/utils/fns';
+import { generateYears } from '@/utils/fns';
 import { Add, Image } from '@mui/icons-material';
 import {
   Avatar,
@@ -84,21 +84,22 @@ export default function Create() {
     enableReinitialize: true,
     validationSchema: postSchema,
     onSubmit: async (values, { setStatus }) => {
-      const reshapedValues = reshapePostFields(values);
+      // const reshapedValues = reshapePostFields(values);
 
-      const dataTransformed = {
-        ...reshapedValues,
-        slug: slugify(values.title)
-      };
+      // const dataTransformed = {
+      //   ...reshapedValues,
+      //   slug: slugify(values.title)
+      // };
 
-      const newPost = await createPost(dataTransformed);
+      // const newPost = await createPost(dataTransformed);
 
-      if (!newPost.ok) {
-        setStatus({ response: newPost.response });
-      } else {
-        setStatus(null);
-        router.push(`/posts/${newPost.response.slug}`);
-      }
+      // if (!newPost.ok) {
+      //   setStatus({ response: newPost.response });
+      // } else {
+      //   setStatus(null);
+      //   router.push(`/posts/${newPost.response.slug}`);
+      // }
+      console.log({ values });
     }
   });
 
