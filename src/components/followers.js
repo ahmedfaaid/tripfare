@@ -32,7 +32,7 @@ export default function Followers() {
         fontWeight={600}
         color='soot'
       >
-        {user.followers.length} followers
+        {user?.followers.length} followers
       </Typography>
       <List>
         {user?.followers.length ? (
